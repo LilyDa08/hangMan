@@ -9,7 +9,43 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
+        <script>
+            let mot = ["B", "O", "N", "J", "O", "U", "R"];
+let vide = ["", "", "", "", "", "", ""];
+let lettre = prompt("Choisissez une lettre");
+let isfound = true
+function guessLetter() {
+    let isfind = true
+    
+
+    for (i = 0; i < mot.length; i++) {
+
+        if (lettre == mot[i]) {
+            vide[i] = lettre;
+            alert("la lettre est bonne!");
+            console.log(vide)
+            // appeler la fonction dans la fonction pour recommencer
+            
+        } else {
+            isfind = false;
+        }
         
+    }
+    if (isfind == false) {
+            console.log("Not in table");
+        }
+}
+
+
+while (isfound == true){
+    guessLetter();
+    lettre = prompt("Choisissez une lettre");
+    if (mot.toString() == vide.toString()){
+        console.log("Game IS OVER ! NTM GROS");
+    }
+}
+console.log(vide);
+            </script>
 
         <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
         <script src="main.js"></script>
