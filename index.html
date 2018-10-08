@@ -1,53 +1,87 @@
 <!doctype html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>HangMan</title>
-        <link rel="stylesheet" href="css/style.css">
-    </head>
-    <body>
-        <script>
-            let mot = ["B", "O", "N", "J", "O", "U", "R"];
-let vide = ["", "", "", "", "", "", ""];
-let lettre = prompt("Choisissez une lettre");
-let isfound = true
-function guessLetter() {
-    let isfind = true
-    
 
-    for (i = 0; i < mot.length; i++) {
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HangMan</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
 
-        if (lettre == mot[i]) {
-            vide[i] = lettre;
-            alert("la lettre est bonne!");
-            console.log(vide)
-            // appeler la fonction dans la fonction pour recommencer
-            
-        } else {
-            isfind = false;
+<body>
+    <script>
+        let mot = ["B", "O", "N", "J", "O", "U", "R"];
+        let vide = ["","","","","","",""];
+        let testError = 0;
+
+
+        // Déclaration de fonction
+        function guessLetter() {
+            // Déclaration de la variable tampon qui est par défaut "false":
+            let letterFound = false;
+            let lettre = prompt("Choisissez une lettre");
+            // Boucle pour parcourir le tableau (mot)
+            for (i = 0; i < mot.length; i++) {
+                // si lettre apparait dans mot:
+                if (lettre == mot[i]) {
+
+                    letterFound = true;
+                    // push dans le tableau vide au même index que la lettre similaire dans le tableau mot
+                    vide[i] = lettre;
+                    // fait apparaitre les lettres bonnes au fur et à mesure dans le tableau vide
+                    console.log(vide);
+
+                }
+            }
+
+            // si ma variable tampon = faux, la lettre n'est pas dans le tableau mot
+            if (letterFound == false) {
+                console.log("Not in table");
+                alert("Try Again");
+                testError++;
+            }
+
+            else {
+                alert("la lettre est bonne!\n" + vide);
+            }
         }
-        
-    }
-    if (isfind == false) {
-            console.log("Not in table");
+
+        // si les 2 tableaux sont identiques, le jeu s'arrete 
+        // (CONVERTIR LES TABLEAUX EN CHAINE DE CARACTERE POUR LES COMPARER PLUS FACILEMENT)
+        // while (mot.toString() != vide.toString()) {
+        //     // appel a la fonction du dessus:
+        //     guessLetter();
+        // }
+
+        // if (mot.toString() == vide.toString()) {
+
+        //     alert("Success!")
+        // }
+
+        while (testError < 10) {
+            if (mot.toString() == vide.toString()) {
+
+                alert("vous avez trouvé le bon mot");
+                // nécessaire de fixer testError=10 afin de faire arreter la boucle en cas de bon mot:
+                testError=10;
+            }
+
+            else {
+                guessLetter();
+                
+            }
         }
+if (testError == 10 && mot.toString() != vide.toString()) {
+
+    alert("vous avez perdu");
 }
 
 
-while (isfound == true){
-    guessLetter();
-    lettre = prompt("Choisissez une lettre");
-    if (mot.toString() == vide.toString()){
-        console.log("Game IS OVER ! NTM GROS");
-    }
-}
-console.log(vide);
-            </script>
+    </script>
+    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="main.js"></script> -->
+</body>
 
-        <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
-        <script src="main.js"></script>
-    </body>
 </html>
