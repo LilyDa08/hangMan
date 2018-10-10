@@ -1,27 +1,32 @@
-let mot = ["B", "O", "N", "J", "O", "U", "R"];
+let motChoice = prompt("choisissez un mot de départ").toUpperCase();
 
-let lettreTrouvee = [];
+let mot = Array.from(motChoice);
 
-let lettre;         // lettre entrée par l'utilisateur.
-let essaiNul = 0;   // nombre d'essais ratés (max 6)
-let essaiBon = 0;   // nombre d'essais corrects
+let goodLetter = []; // bonnes lettres trouvées.
+let wrongLetter = []; // mauvaise lettres essayées.
+
+let lettre; // lettre entrée par l'utilisateur.
+let essaiNul = 0; // nombre d'essais ratés (max 6)
+let essaiBon = 0; // nombre d'essais corrects
+let essaiMax = 6;
 let wordFound = false;
+let divCase = document.querySelector("#good_letter");
 
 function guessLetter() {
-    
-    while (mot.toString() !== lettreTrouvee.toString()) {
-        while (essaiNul <= 6 && wordFound == false) {
+
+    while (essaiNul <= essaiMax && mot.toString() !== goodLetter.toString()) {
             lettre = prompt("Choisissez une lettre").toUpperCase();
             let inWord = false;
 
             for (i = 0; i < mot.length; i++) {
 
                 if (lettre == mot[i]) {
-                    lettreTrouvee[i] = lettre;
+                    goodLetter[i] = lettre;
                     inWord = true;
                     essaiBon++;
-                    console.log(lettreTrouvee);
-                    if (mot.toString() == lettreTrouvee.toString()) {
+                    divCase.innerHTML=goodLetter.join('');
+                    
+                    if (mot.toString() == goodLetter.toString()) {
                         wordFound = true;
                         alert("well done! vous avez réussi en " + (essaiNul + essaiBon) + " essais");
                         return;
@@ -30,15 +35,20 @@ function guessLetter() {
             }
 
             if (inWord == false) {
-                essaiNul++;
-                alert("La lettre " + lettre + " n'est pas dans ce mot");
+                if (wrongLetter.includes(lettre) == false) {
+                    essaiNul++;
+                    wrongLetter.push(lettre);
+                    alert("La lettre " + lettre + " n'est pas dans ce mot.\n" + wrongLetter + "\n Il vous reste " + (7 - essaiNul) + "essai(s).");
+                } else {
+                    alert("vous avez déjà essayé cette lettre !");
+                }
             } else {
-                alert("la lettre est bonne!\n" +
-                     lettreTrouvee);
+                alert("la lettre est bonne!\n" + goodLetter);
             }
-        }
-        alert("GAME OVER");
     }
+        alert("GAME OVER");
+        return;
+
 }
 
 guessLetter();
